@@ -1,0 +1,16 @@
+{
+  "admit": [
+    "opti",
+    "repo-robot",
+    "persistent-self-coder",
+    "decision-audit-log",
+    "hardware-prototype-tracker",
+    "free-n-compressor",
+    "barrage"
+  ],
+  "forbid": [
+    "force-push",
+    "secret-commit",
+    "public-without-ask"
+  ]
+}
