@@ -6,11 +6,19 @@
     "decision-audit-log",
     "hardware-prototype-tracker",
     "free-n-compressor",
-    "barrage"
+    "barrage",
+    "coder"
   ],
   "forbid": [
     "force-push",
     "secret-commit",
     "public-without-ask"
-  ]
+  ],
+  "coder": {
+    "tree": "ternary",
+    "left": "air",
+    "mid": "eat",
+    "right": "win",
+    "talk": "report"
+  }
 }

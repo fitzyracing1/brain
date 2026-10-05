@@ -52,7 +52,10 @@ curl http://127.0.0.1:8787/v1/health
 curl -X POST http://127.0.0.1:8787/v1/tick \
   -H 'content-type: application/json' \
   -d '{"input":"what next"}'
-curl "http://127.0.0.1:8787/v1/internet?q=cambridge"</pre>
+curl "http://127.0.0.1:8787/v1/internet?q=cambridge"
+curl -X POST http://127.0.0.1:8787/v1/code \
+  -H 'content-type: application/json' \
+  -d '{"input":"add a helper"}'</pre>
     <p><a href="https://github.com/fitzyracing1/brain">repo</a> · <a href="./api/v1/brain.json">static api</a> · <a href="./api/openapi.json">openapi</a></p>
   </section>
 </main>

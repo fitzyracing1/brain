@@ -33,6 +33,7 @@ READ = [
     "cortex/tick.md",
     "skills/index.json",
     "internet/allow.md",
+    "agent/STRUCTURE.md",
 ]
 
 
@@ -102,6 +103,7 @@ def brain_doc() -> dict:
             "tick": "POST /v1/tick {input}",
             "look": "POST /v1/look {url}",
             "search": "GET /v1/internet?q=",
+            "code": "POST /v1/code {input}",
         },
     }
 
@@ -239,6 +241,15 @@ class Handler(BaseHTTPRequestHandler):
                 self._send(400, {"ok": False, "error": "url required"})
                 return
             self._send(200, fetch_url(url))
+            return
+        if parsed.path == "/v1/code":
+            line = str(data.get("input") or "").strip()
+            if not line:
+                self._send(400, {"ok": False, "error": "input required"})
+                return
+            sys.path.insert(0, str(ROOT / "agent"))
+            from coder import plan
+            self._send(200, plan(line))
             return
         self._send(404, {"ok": False, "error": "not found"})
 

@@ -9,8 +9,10 @@
     "brain": "GET /v1/brain",
     "tick": "POST /v1/tick {\"input\":\"what next\"}",
     "look": "POST /v1/look {\"url\":\"https://example.com\"}",
-    "search": "GET /v1/internet?q=cambridge"
+    "search": "GET /v1/internet?q=cambridge",
+    "code": "POST /v1/code {\"input\":\"add a helper\"}"
   },
+  "coder": {"left": "air", "mid": "eat", "right": "win", "talk": "report"},
   "layers": ["air", "eat", "win", "talk"],
   "files": ["memory/who.md", "memory/rules.md", "cortex/layers.md", "cortex/tick.md", "skills/index.json", "internet/allow.md"]
 }

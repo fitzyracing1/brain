@@ -15,6 +15,7 @@ cortex/layers.md    air, eat, win, talk
 cortex/tick.md      one cycle
 skills/index.json   admit and forbid
 internet/allow.md   what the brain may fetch
+agent/coder.py      coding agent on the ternary tree
 api.py              live HTTP API
 docs/index.html     website
 ```
@@ -32,7 +33,13 @@ curl -X POST http://127.0.0.1:8787/v1/look \
   -H 'content-type: application/json' \
   -d '{"url":"https://example.com"}'
 curl "http://127.0.0.1:8787/v1/internet?q=cambridge"
+curl -X POST http://127.0.0.1:8787/v1/code \
+  -H 'content-type: application/json' \
+  -d '{"input":"add a helper that echoes a tick"}'
+python3 agent/coder.py "add a helper that echoes a tick"
 ```
+
+The coder plans on a ternary node: left is air, mid is eat, right is win. Symbols live in a ternary search tree. Scratch files land in `agent/scratch/`.
 
 The live process is the one that can append ticks and fetch the public web. GitHub Pages serves the site and the static brain document. It cannot run the tick server.
 
