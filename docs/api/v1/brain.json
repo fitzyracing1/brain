@@ -1,0 +1,16 @@
+{
+  "name": "brain",
+  "repo": "https://github.com/fitzyracing1/brain",
+  "site": "https://fitzyracing1.github.io/brain/",
+  "live": "python3 api.py  ->  http://127.0.0.1:8787",
+  "call": {
+    "static_brain": "https://fitzyracing1.github.io/brain/api/v1/brain.json",
+    "health": "GET /v1/health",
+    "brain": "GET /v1/brain",
+    "tick": "POST /v1/tick {\"input\":\"what next\"}",
+    "look": "POST /v1/look {\"url\":\"https://example.com\"}",
+    "search": "GET /v1/internet?q=cambridge"
+  },
+  "layers": ["air", "eat", "win", "talk"],
+  "files": ["memory/who.md", "memory/rules.md", "cortex/layers.md", "cortex/tick.md", "skills/index.json", "internet/allow.md"]
+}

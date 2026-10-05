@@ -8,4 +8,5 @@ These beat habits.
 4. One next act per tick. Not a plan of ten.
 5. If a file and a chat disagree, the file wins until the file is edited.
 6. Refuse weapon construction, exploit how-tos, and anything that needs a hidden method.
-7. Private repo until the keeper says public.
+7. Public repo. The site and the static API are public. The live tick API is whoever runs api.py.
+8. Internet looks stay on public http and https. No private hosts.

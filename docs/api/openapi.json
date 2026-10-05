@@ -1,0 +1,12 @@
+{
+  "openapi": "3.0.3",
+  "info": {"title": "brain", "version": "1.0.0"},
+  "servers": [{"url": "http://127.0.0.1:8787"}],
+  "paths": {
+    "/v1/health": {"get": {"responses": {"200": {"description": "ok"}}}},
+    "/v1/brain": {"get": {"responses": {"200": {"description": "memory and rules"}}}},
+    "/v1/tick": {"post": {"requestBody": {"required": true}, "responses": {"200": {"description": "one act"}}}},
+    "/v1/look": {"post": {"responses": {"200": {"description": "public page text"}}}},
+    "/v1/internet": {"get": {"parameters": [{"name": "q", "in": "query", "required": true, "schema": {"type": "string"}}], "responses": {"200": {"description": "search"}}}}
+  }
+}

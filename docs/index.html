@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>brain</title>
+<meta name="description" content="A brain as a public GitHub repo. Memory, rules, a site, and a call API.">
+<link rel="canonical" href="https://fitzyracing1.github.io/brain/">
+<style>
+  :root { color-scheme: dark; --bg:#10140f; --ink:#e7f0df; --dim:#9aa892; --line:#2a3326; --accent:#d6ff4a; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:16px/1.45 ui-sans-serif, system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  main { max-width:720px; margin:0 auto; padding:28px 18px 64px; }
+  h1 { font-size:42px; letter-spacing:-0.04em; margin:0 0 6px; }
+  h1 span { color:var(--accent); }
+  p.lead { color:var(--dim); margin:0 0 22px; }
+  a { color:var(--accent); }
+  section { border:1px solid var(--line); border-radius:14px; padding:14px; margin:12px 0; }
+  label { display:block; font-size:13px; color:var(--dim); margin-bottom:6px; }
+  input, textarea { width:100%; background:#0c100c; color:var(--ink); border:1px solid var(--line); border-radius:10px; padding:12px; font:inherit; }
+  button { margin-top:10px; background:var(--accent); color:#14180f; border:0; border-radius:999px; padding:12px 16px; font-weight:700; }
+  pre { white-space:pre-wrap; word-break:break-word; background:#0c100c; padding:12px; border-radius:10px; }
+  .row { display:flex; gap:8px; flex-wrap:wrap; }
+  .pill { border:1px solid var(--line); border-radius:999px; padding:4px 10px; color:var(--dim); font-size:13px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>br<span>ai</span>n</h1>
+  <p class="lead">A public repo that remembers, ranks, and answers one act. The site reads the tree. The API is how you call it.</p>
+  <div class="row">
+    <span class="pill">air</span><span class="pill">eat</span><span class="pill">win</span><span class="pill">talk</span>
+  </div>
+  <section>
+    <label for="line">Tick</label>
+    <input id="line" value="what should the next act be">
+    <button id="go" type="button">Run tick</button>
+    <pre id="out">waiting</pre>
+  </section>
+  <section>
+    <label for="q">Internet</label>
+    <input id="q" placeholder="search, or paste an https url">
+    <button id="look" type="button">Look</button>
+    <pre id="web">no look yet</pre>
+  </section>
+  <section>
+    <label>Call</label>
+    <pre>GET https://fitzyracing1.github.io/brain/api/v1/brain.json
+
+python3 api.py
+curl http://127.0.0.1:8787/v1/health
+curl -X POST http://127.0.0.1:8787/v1/tick \
+  -H 'content-type: application/json' \
+  -d '{"input":"what next"}'
+curl "http://127.0.0.1:8787/v1/internet?q=cambridge"</pre>
+    <p><a href="https://github.com/fitzyracing1/brain">repo</a> · <a href="./api/v1/brain.json">static api</a> · <a href="./api/openapi.json">openapi</a></p>
+  </section>
+</main>
+<script>
+const RAW = "https://raw.githubusercontent.com/fitzyracing1/brain/main/";
+const FILES = ["memory/rules.md","cortex/layers.md","memory/who.md","cortex/tick.md","skills/index.json","internet/allow.md"];
+function layerFor(line) {
+  const t = line.toLowerCase();
+  if (["down","unreadable","auth","crash","disk"].some(w => t.includes(w))) return "air";
+  if (["remember","memory","commit","save"].some(w => t.includes(w))) return "eat";
+  if (["status","report","tell","explain"].some(w => t.includes(w))) return "talk";
+  return "win";
+}
+function actFor(line, layer) {
+  if (layer === "air") return "Check that memory/, cortex/, and skills/index.json are readable before any other act.";
+  if (layer === "eat") return "Append the new fact to memory/who.md and commit it. Do not edit old ticks.";
+  if (layer === "talk") return "Report the last tick, then stop.";
+  return "Do one file-level act for: " + line.trim();
+}
+document.getElementById("go").onclick = async () => {
+  const line = document.getElementById("line").value;
+  const read = [];
+  for (const f of FILES) {
+    try { const r = await fetch(RAW + f); if (r.ok) read.push(f); } catch (e) {}
+  }
+  const layer = layerFor(line);
+  document.getElementById("out").textContent = JSON.stringify({
+    input: line, read, layer, act: actFor(line, layer),
+    why: "site tick. live append is POST /v1/tick on api.py"
+  }, null, 2);
+};
+document.getElementById("look").onclick = async () => {
+  const q = document.getElementById("q").value.trim();
+  const out = document.getElementById("web");
+  if (!q) { out.textContent = "empty"; return; }
+  out.textContent = "looking";
+  try {
+    if (q.startsWith("http://") || q.startsWith("https://")) {
+      const r = await fetch("https://r.jina.ai/" + q);
+      out.textContent = (await r.text()).slice(0, 2000);
+    } else {
+      const r = await fetch("https://api.duckduckgo.com/?q=" + encodeURIComponent(q) + "&format=json&no_html=1");
+      const data = await r.json();
+      out.textContent = JSON.stringify({heading: data.Heading, abstract: data.AbstractText, url: data.AbstractURL}, null, 2);
+    }
+  } catch (e) {
+    out.textContent = "browser blocked that look. Use api.py POST /v1/look from a machine.";
+  }
+};
+</script>
+</body>
+</html>
