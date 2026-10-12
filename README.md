@@ -49,3 +49,8 @@ The live process is the one that can append ticks and fetch the public web. GitH
 - A rule beats a habit.
 - No secrets in this repo.
 - Internet looks stay on public http and https.
+
+## Documentation
+
+- In-repo docs: [docs/](docs/index.md)
+- Wiki: [https://github.com/fitzyracing1/brain/wiki](https://github.com/fitzyracing1/brain/wiki)
